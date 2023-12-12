@@ -1,0 +1,34 @@
+
+window {
+  background-color: grey;
+  /*background: url(back.jpg);
+  background-size: cover; */
+  font-family: 'Arial Narrow', sans-serif;
+  font-size: 16px;
+  font-weight: 75;
+  color: rgb(155, 94, 94);
+  margin: 0;
+  padding: 0;
+}
+
+
+#buttonA {
+  color: #fefeff;
+  background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  font-family:'Impact', fantasy;
+  font-size: 25px;
+  font-weight: 300;
+  margin: 5px;
+  border-radius: 30px;
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+}
+#buttonF {
+  background-color: #fefffe;
+  margin: 5px;
+  transition: 0.5s;
+  color: rgb(109, 98, 98);            
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+
+

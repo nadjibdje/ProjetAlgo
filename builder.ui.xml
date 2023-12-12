@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="style.css"?>
+<interface>
+  <object id="window" class="GtkWindow">
+    <property name="title" >VisuAlgo</property>
+    <property name="default-width">1920</property>
+    <property name="default-height">1080</property>
+    <property name="resizable">TRUE</property>
+      <child>
+        <object id="grid" class="GtkGrid">
+        <property name="halign">start</property>
+        <property name="valign">end</property>
+        
+
+          <child>
+            <object id="Entry" class="GtkEntry">
+            <property name="name">buttonF</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">1</property>
+            </layout>
+            </object>
+          </child>
+
+         <child>
+          <object id="buttonCreate" class="GtkButton">
+            <property name="label">Create</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+         </child> 
+
+         <child>
+          <object id="buttonInsert" class="GtkButton">
+            <property name="label">Insert</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+         </child>
+
+         <child>
+          <object id="buttonRemove" class="GtkButton">
+            <property name="label">Remove</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+         </child>
+
+
+         <child>
+          <object id="buttonSearch" class="GtkButton">
+            <property name="label">Search</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">3</property>
+            </layout>
+          </object>
+         </child>
+
+         <child>
+          <object id="buttonSort" class="GtkButton">
+            <property name="label">Sort</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">4</property>
+            </layout>
+          </object>
+         </child>
+
+         <child>
+          <object id="buttonQuit" class="GtkButton">
+            <property name="label">Quit</property>
+            <property name="name">buttonA</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">5</property>
+              <property name="column-span">1</property>
+            </layout>
+          </object>
+         </child>
+
+
+        </object>
+      </child>
+  </object>
+</interface>
