@@ -1,34 +1,55 @@
 
 window {
-  background-color: grey;
-  /*background: url(back.jpg);
-  background-size: cover; */
+  background-color: rgb(209, 150, 150);
+
   font-family: 'Arial Narrow', sans-serif;
   font-size: 16px;
   font-weight: 75;
-  color: rgb(155, 94, 94);
+  color: rgb(0, 0, 0);
   margin: 0;
   padding: 0;
 }
 
-
-#buttonA {
-  color: #fefeff;
-  background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-  font-family:'Impact', fantasy;
-  font-size: 25px;
-  font-weight: 300;
-  margin: 5px;
-  border-radius: 30px;
-  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+.Drawing{
+background-color: rgb(240, 240, 240);
+color: rgb(240, 240, 240);
 }
-#buttonF {
-  background-color: #fefffe;
+.buttonA {
+  color: white;
+  background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  margin: 5px;
+  background-size: 120% 150%;           
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+.buttonA:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.noerror {
+  color: black;
+  background-image: white;
+  margin: 5px;
+  transition: 0.5s;          
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+
+.error{
+  background-color: rgba(129, 26, 26, 0.418);          
   margin: 5px;
   transition: 0.5s;
-  color: rgb(109, 98, 98);            
+  color: white;            
   box-shadow: -2px -2px 2px rgb(121, 187, 204);
   border-radius: 30px;
 }
 
 
+/*<packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">1</property>
+              <property name="width">5</property>
+              <property name="height">5</property>
+            </packing>*/

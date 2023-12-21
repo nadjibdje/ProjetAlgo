@@ -2,33 +2,48 @@
 <?xml-stylesheet type="text/css" href="style.css"?>
 <interface>
   <object id="window" class="GtkWindow">
-    <property name="title" >VisuAlgo</property>
-    <property name="default-width">1920</property>
-    <property name="default-height">1080</property>
-    <property name="resizable">TRUE</property>
+    <property name="title" >VisuaList</property>
+    <property name="resizable">FALSE</property>
+    <property name="default_width">1500</property>
+    <property name="default_height">1000</property>
+    
       <child>
         <object id="grid" class="GtkGrid">
-        <property name="halign">start</property>
-        <property name="valign">end</property>
-        
+          <child>
+            <object id="drawing_area" class="GtkDrawingArea">
+            <property name="visible">True</property>
+            <property name="width_request">50</property>
+            <property name="height_request">500</property>
+            <style>
+              <class name="Drawing"/>
+            </style>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+              <property name="column-span">100</property>
+              <property name="row-span">1</property>
+            </layout>
+            </object>
+          </child>
 
           <child>
             <object id="Entry" class="GtkEntry">
-            <property name="name">buttonF</property>
             <layout>
               <property name="column">1</property>
-              <property name="row">1</property>
+              <property name="row">3</property>
             </layout>
             </object>
           </child>
 
          <child>
           <object id="buttonCreate" class="GtkButton">
-            <property name="label">Create</property>
-            <property name="name">buttonA</property>
+            <property name="label"> Create</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">0</property>
+              <property name="row">2</property>
             </layout>
           </object>
          </child> 
@@ -37,9 +52,12 @@
           <object id="buttonInsert" class="GtkButton">
             <property name="label">Insert</property>
             <property name="name">buttonA</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">1</property>
+              <property name="row">3</property>
             </layout>
           </object>
          </child>
@@ -48,9 +66,12 @@
           <object id="buttonRemove" class="GtkButton">
             <property name="label">Remove</property>
             <property name="name">buttonA</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">2</property>
+              <property name="row">4</property>
             </layout>
           </object>
          </child>
@@ -60,9 +81,12 @@
           <object id="buttonSearch" class="GtkButton">
             <property name="label">Search</property>
             <property name="name">buttonA</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">3</property>
+              <property name="row">5</property>
             </layout>
           </object>
          </child>
@@ -71,9 +95,12 @@
           <object id="buttonSort" class="GtkButton">
             <property name="label">Sort</property>
             <property name="name">buttonA</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">4</property>
+              <property name="row">6</property>
             </layout>
           </object>
          </child>
@@ -82,11 +109,14 @@
           <object id="buttonQuit" class="GtkButton">
             <property name="label">Quit</property>
             <property name="name">buttonA</property>
+            <style>
+              <class name="buttonA"/>
+            </style>
             <layout>
               <property name="column">0</property>
-              <property name="row">5</property>
-              <property name="column-span">1</property>
+              <property name="row">7</property>
             </layout>
+            
           </object>
          </child>
 
