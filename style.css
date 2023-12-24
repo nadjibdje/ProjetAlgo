@@ -1,6 +1,6 @@
 
 window {
-  background-color: rgb(209, 150, 150);
+  background-color: rgb(183, 196, 171);
 
   font-family: 'Arial Narrow', sans-serif;
   font-size: 16px;
@@ -8,11 +8,6 @@ window {
   color: rgb(0, 0, 0);
   margin: 0;
   padding: 0;
-}
-
-.Drawing{
-background-color: rgb(240, 240, 240);
-color: rgb(240, 240, 240);
 }
 .buttonA {
   color: white;
@@ -26,7 +21,9 @@ color: rgb(240, 240, 240);
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
-}
+} 
+
+
 
 .noerror {
   color: black;
@@ -45,11 +42,6 @@ color: rgb(240, 240, 240);
   box-shadow: -2px -2px 2px rgb(121, 187, 204);
   border-radius: 30px;
 }
-
-
-/*<packing>
-              <property name="left_attach">0</property>
-              <property name="top_attach">1</property>
-              <property name="width">5</property>
-              <property name="height">5</property>
-            </packing>*/
+/*<style>
+              <class name="Drawing"/>
+            </style>*/

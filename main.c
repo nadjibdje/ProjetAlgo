@@ -3,25 +3,29 @@
 #include "math.h"
 list* tete=NULL;
 const gchar *text;
-GObject *entry;
 
-static gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
-    // Drawing logic goes here
-    // You can draw nodes representing the linked list or other custom graphics here
+static void
+draw_function (GtkDrawingArea *area, cairo_t *cr, int width, int height, gpointer user_data) {
+  int square_size = 40.0;
 
-    // Example: Drawing a circle at a specific position (50, 50) with a radius of 20
-    cairo_set_source_rgb(cr, 0, 0, 0); // Set color to black
-    cairo_arc(cr, 50, 50, 20, 0, 2 * G_PI); // Draw a circle
-    cairo_fill(cr); // Fill the circle
-
-    return FALSE; // Return FALSE to indicate the event has been handled
+  cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
+  cairo_paint (cr);
+  cairo_set_line_width (cr, 2.0);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0); /* black */
+  cairo_rectangle (cr,
+                   width/2.0 - square_size/2,
+                   height/2.0 - square_size/2,
+                   square_size,
+                   square_size);
+  cairo_stroke (cr);
 }
+
 
 //fonctions pour les buttons
 static void creating (GtkWidget *widget,gpointer   data){ g_print ("creation d'une liste chainée\n");}
 static void adding (GtkWidget *widget,gpointer   data){ add(&tete, atoi(text),0) ;  afficherlist(tete); }
 
-static void lire (GtkWidget *widget,gpointer   data){ text = gtk_editable_get_text(GTK_EDITABLE(entry)); 
+static void lire (GtkWidget *widget,gpointer   data){ text = gtk_editable_get_text(GTK_EDITABLE(data)); 
                                                       if (atoi(text) > 100) {gtk_widget_add_css_class(GTK_WIDGET(data), "error"); 
                                                                              gtk_widget_remove_css_class(GTK_WIDGET(data), "noerror");
                                                           }
@@ -34,14 +38,11 @@ static void lire (GtkWidget *widget,gpointer   data){ text = gtk_editable_get_te
 static void deleting (GtkWidget *widget,gpointer   data){  g_print ("suppresion d'un noeud\n");}
 
 //fonction pour changer la visibilité d'un widget
-static void visibility (GtkWidget *widget,gpointer   data){ 
+void reveal (GtkWidget *widget,gpointer   data){ 
   gboolean visible = gtk_widget_get_visible(GTK_WIDGET(data));
-  if (visible)
-        gtk_widget_set_visible(GTK_WIDGET(data), FALSE);
-    else
-        gtk_widget_set_visible(GTK_WIDGET(data), TRUE);   
+  if (visible) gtk_widget_set_visible(GTK_WIDGET(data), FALSE);
+    else gtk_widget_set_visible(GTK_WIDGET(data), TRUE);   
         }
-
 
 
 //fonction pour l'interface
@@ -51,6 +52,7 @@ static void activate (GtkApplication *app, gpointer user_data){
 GObject *window;
 GObject *grid;
 GObject *button;
+GObject *entry;
 GObject *drawing_area;
 GtkCssProvider *cssProvider = gtk_css_provider_new();
 
@@ -76,30 +78,93 @@ gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_
   //button 1 creation
   button = gtk_builder_get_object (builder, "buttonCreate");
   g_signal_connect (button, "clicked", G_CALLBACK (creating), NULL);
-  //button entry
-  entry = gtk_builder_get_object (builder, "Entry");
-  g_signal_connect (entry, "activate", G_CALLBACK (lire), entry);
-  gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
-  gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+    //entry valeurs
+    entry = gtk_builder_get_object (builder, "EntryCreate");
+    gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+    g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+    gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+
+    //go button
+      entry = gtk_builder_get_object (builder, "buttonGoCreate");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+  
+  
+
   //button 2 insertion
-  button = gtk_builder_get_object (builder, "buttonInsert");
-  g_signal_connect (button, "clicked", G_CALLBACK (visibility), entry);
+    button = gtk_builder_get_object (builder, "buttonInsert");
+      //entry 1 position
+      entry = gtk_builder_get_object (builder, "EntryPosInsert");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+      gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+  
+      //entry 2 valeur
+      entry = gtk_builder_get_object (builder, "EntryValInsert");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+      gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+      
+      //go button
+      entry = gtk_builder_get_object (builder, "buttonGoInsert");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+  /*g_signal_connect (entry, "activate", G_CALLBACK (lire), entry);*/
+  
+
+
+
+
+
+
   //button 3 suppresion
   button = gtk_builder_get_object (builder, "buttonRemove");
   g_signal_connect (button, "clicked", G_CALLBACK (deleting), NULL);
+    //entry position
+    entry = gtk_builder_get_object (builder, "EntryPosSupp");
+    gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+    g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+    gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+
+    //go button
+      entry = gtk_builder_get_object (builder, "buttonGoSupp");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+
+
+
   //button 4 recherche
   button = gtk_builder_get_object (builder, "buttonSearch");
   g_signal_connect (button, "clicked", G_CALLBACK (creating), NULL);
+    //entry valeur
+    entry = gtk_builder_get_object (builder, "EntryValSearch");
+    gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+    g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+    gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
+
+    //go button
+      entry = gtk_builder_get_object (builder, "buttonGoSearch");
+      gtk_widget_set_visible(GTK_WIDGET(entry), FALSE);
+      g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
+
+
+
+  //drawing area
+  drawing_area = gtk_builder_get_object(builder, "animations");
+  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (drawing_area), draw_function, NULL, NULL);
+  //gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA (drawing_area), draw_callback, NULL, NULL);
+  //g_signal_connect(drawing_area, "draw", G_CALLBACK(draw_callback), NULL);
+
   //button 5 tri
   button = gtk_builder_get_object (builder, "buttonSort");
-  g_signal_connect (button, "clicked", G_CALLBACK (creating), NULL);
+  g_signal_connect(button, "clicked", G_CALLBACK(creating), drawing_area);
+ 
+  
   //button 7 quitter
   button = gtk_builder_get_object (builder, "buttonQuit");
   g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_window_destroy), window);
   gtk_grid_attach(GTK_GRID(grid), GTK_WIDGET(button), 4, 4, 4, 4);
-//drawing area
-drawing_area = gtk_builder_get_object(builder, "drawing_area");
-g_signal_connect(tete, "clicked", G_CALLBACK(draw_callback), drawing_area);
+
 
 
 
