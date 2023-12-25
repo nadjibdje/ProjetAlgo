@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 
@@ -10,22 +11,48 @@ typedef struct list {
 
 
 
-static void add(list** tete, int value,int pos) {
+static void add(list** tete, int value, int pos) {
     list* nlist = (list*)malloc(sizeof(list));
     nlist->element = value;
     nlist->suivant = NULL;
 
-    if (*tete == NULL) {
+    if (pos <= 0) {
+        printf("Invalid position.\n");
+        free(nlist); // Free the allocated memory for the node
+        return;
+    }
+
+    if (pos == 1 || *tete == NULL) {
+        nlist->suivant = *tete;
         *tete = nlist;
     } else {
-        list* p= *tete;
-        while (p->suivant != NULL) {
-            p= p->suivant;
+        list* p = *tete;
+        int count = 1;
+
+        while (count < pos - 1 && p->suivant != NULL) {
+            p = p->suivant;
+            count++;
         }
+
+        nlist->suivant = p->suivant;
         p->suivant = nlist;
     }
 }
 
+
+static bool MathSearch(list* tete, int value) {
+    list* p= tete;
+    int i= 0;
+    while (p!= NULL) {
+        if (p->element == value) {
+            return true;
+        }
+        p= p->suivant;
+        i++;
+    }
+    return false;
+
+}
 
 // fontion pour tester 
 void afficherlist(list* tete) {

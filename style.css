@@ -27,7 +27,6 @@ window {
 
 .noerror {
   color: black;
-  background-image: white;
   margin: 5px;
   transition: 0.5s;          
   box-shadow: -2px -2px 2px rgb(121, 187, 204);
@@ -36,6 +35,15 @@ window {
 
 .error{
   background-color: rgba(129, 26, 26, 0.418);          
+  margin: 5px;
+  transition: 0.5s;
+  color: white;            
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+
+.found{
+  background-color: rgba(53, 184, 59, 0.418);          
   margin: 5px;
   transition: 0.5s;
   color: white;            
