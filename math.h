@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
-
 typedef struct list {
     int element;
     struct list* suivant;
@@ -21,7 +20,7 @@ void freeLinkedList(list* head) {
 }
 
 //fonction pour la creation
-static void MathCreer(list** tete, char* token, int count) {
+static void MathCreer(list** tete, char* token, int* numCircles) {
     if (*tete != NULL) {
         freeLinkedList(*tete);
         *tete = NULL;
@@ -29,7 +28,7 @@ static void MathCreer(list** tete, char* token, int count) {
     
     list* current = NULL;
 
-    while (token != NULL && count <= 10) {
+    while (token != NULL && *numCircles <= 10) {
         list* newNode = (list*)malloc(sizeof(list));
         newNode->element = atoi(token);
         newNode->suivant = NULL;
@@ -40,7 +39,7 @@ static void MathCreer(list** tete, char* token, int count) {
         }
         current = newNode; 
         token = strtok(NULL, ",");
-        count++;
+        (*numCircles)++;
     }
 }
 
@@ -74,10 +73,15 @@ static void MathAdd(list** tete, int value, int pos) {
 }
 //fonction pour la suppression
 
-static void MathSupp(list** tete, int pos) {
+static bool MathSupp(list** tete, int pos) {
+    if (*tete == NULL) {
+        printf("List is empty.\n");
+        return false;
+    }
+
     if (pos <= 0) {
         printf("Invalid position.\n");
-        return;
+        return false;
     }
 
     if (pos == 1) {
@@ -95,13 +99,14 @@ static void MathSupp(list** tete, int pos) {
 
         if (p->suivant == NULL) {
             printf("Invalid position.\n");
-            return;
+            return false;
         }
 
         list* q = p->suivant;
         p->suivant = q->suivant;
         free(q);
     }
+    return true;
 }
 
 
@@ -121,15 +126,14 @@ static bool MathSearch(list* tete, int value) {
 }
 
 //fonction pour le tri
-void MathBubbleSort(list **tete) {
+static bool MathBubbleSort(list **tete) {
     int i;
     bool swapped;
     list *ptr;
     list *last = NULL;
 
-    if (tete == NULL || (*tete)->suivant == NULL) {
-        return;
-    }
+    if (*tete == NULL  ) return false;
+    else if ((*tete)->suivant == NULL) return true;
 
     do {
         swapped = false;
@@ -146,6 +150,7 @@ void MathBubbleSort(list **tete) {
         }
         last = ptr;
     } while (swapped);
+return true;
 }
 
 
