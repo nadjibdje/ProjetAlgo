@@ -6,16 +6,11 @@
 list* tete=NULL;
 GObject *drawing_area;
 static gboolean should_draw = FALSE;
-int* numCircles = NULL;
 //structure pour les deux data pointers
 typedef struct {
     gpointer data1;
     gpointer data2;
-    gpointer label;
 } TwoDataPointers;
-
-
-
 
 //fonctions pour le dessin
 static void
@@ -26,6 +21,7 @@ draw_function (GtkDrawingArea *area, cairo_t *cr, int width, int height, gpointe
 if (should_draw) {
     list* current = tete;
     int MaxnumCircles = 10;
+    int numCircles = 0;
     double centerX = width / 2.0;
     double centerY = height / 2.0;
     double radius = 35;
@@ -53,6 +49,7 @@ if (should_draw) {
         cairo_text_extents(cr, number, &text_extents);
         cairo_move_to(cr, x - text_extents.width / 2, y + text_extents.height / 2);
         cairo_show_text(cr, number);
+        numCircles++;
         // dessin des lignes entre les cercles
       if (i < MaxnumCircles - 1 && current->suivant != NULL) {
         double nextX = centerX + (radius * 2 + separation) * ((i + 1) - (MaxnumCircles - 1) / 2.0);
@@ -76,53 +73,26 @@ button_clicked(GtkButton *button, gpointer data) {
 
 //fonction pour la creation
 static void creation(GtkWidget *widget, gpointer data) {
-    *numCircles = 0;
+    int count = 0;
     const gchar *text = gtk_editable_get_text(GTK_EDITABLE(data));
-    char* text1 = strdup(text);
-    char *token = strtok((char *)text1, ",");
-    MathCreer(&tete, token, numCircles);
+    char *token = strtok((char *)text, ",");
+    MathCreer(&tete, token, count);
     afficherlist(tete);
-    g_print("%d",*numCircles);
 }
 
 
 //fonction pour l'insertion
 static void insertion (GtkWidget *widget,TwoDataPointers   *datap){  
-  g_print("%d",*numCircles);
-  if(*numCircles < 10 ){
     const gchar *text1 = gtk_editable_get_text(GTK_EDITABLE(datap->data1));
     const gchar *text2 = gtk_editable_get_text(GTK_EDITABLE(datap->data2));
-    
-    if (atoi(text2)<1 || atoi(text2) > (*numCircles)+1) {
-      gtk_widget_set_visible(GTK_WIDGET(datap->label), TRUE);
-      gtk_label_set_text(GTK_LABEL(datap->label), "Position invalide");
-    }
-     else{ MathAdd(&tete, atoi(text1),atoi(text2)) ;
-          (*numCircles)++;
-          afficherlist(tete);
-          gtk_widget_set_visible(GTK_WIDGET(datap->label), FALSE);
-        }
-  }else{
-          gtk_widget_set_visible(GTK_WIDGET(datap->label), TRUE);
-          gtk_label_set_text(GTK_LABEL(datap->label), "Liste pleine");
-        }
+    MathAdd(&tete, atoi(text1),atoi(text2)) ;  afficherlist(tete); 
   }
 
 
 //fonction pour la suppression
 static void suppression (GtkWidget *widget,gpointer   data){ 
-  if (*numCircles == 0) g_print("Liste vide");
-  else {
-    const gchar *text = gtk_editable_get_text(GTK_EDITABLE(data));
-    if(atoi(text)<=0 || atoi(text) > *numCircles) g_print("Position invalide");
-      else {
-        MathSupp(&tete, atoi(text));
-        (*numCircles)--;
-        afficherlist(tete);
-      }
-
-      }
-  g_print("%d",*numCircles);
+  const gchar *text = gtk_editable_get_text(GTK_EDITABLE(data));
+  MathSupp(&tete, atoi(text)); afficherlist(tete);
 
 }
 
@@ -144,12 +114,6 @@ static void recherche (GtkWidget *widget,gpointer   data){
 //fonction pour le tri
 static void tri (GtkWidget *widget,gpointer   data){
     MathBubbleSort(&tete); afficherlist(tete);
-    gtk_widget_set_visible(GTK_WIDGET(data), TRUE);
-    if (MathBubbleSort(&tete))  {
-      gtk_label_set_text(GTK_LABEL(data), "Liste triée");
-    } else {
-      gtk_label_set_text(GTK_LABEL(data), "Liste vide");
-    }
 }
 
 //fonction pour changer la visibilité d'un widget
@@ -158,9 +122,7 @@ void reveal (GtkWidget *widget,gpointer   data){
   if (visible) gtk_widget_set_visible(GTK_WIDGET(data), FALSE);
     else gtk_widget_set_visible(GTK_WIDGET(data), TRUE);   
         }
-void hideLabel (GtkWidget *widget,gpointer   data){ 
-  if (gtk_widget_get_visible(GTK_WIDGET(data))) gtk_widget_set_visible(GTK_WIDGET(data), FALSE);
-        }
+
 
 //fonction pour l'interface
 static void activate (GtkApplication *app, gpointer user_data){
@@ -168,15 +130,13 @@ static void activate (GtkApplication *app, gpointer user_data){
 //declaration des variables
 GObject *window;
 GObject *grid;
-GObject *label;
 GObject *button;
 GObject *entry;
 GObject *entry1;
 GObject *GoButton;
 GtkCssProvider *cssProvider = gtk_css_provider_new();
 TwoDataPointers *datap = g_new(TwoDataPointers, 1);
-numCircles = malloc(sizeof(int));
-*numCircles = 0;
+
   // initialisation du gtk builder
   GtkBuilder *builder = gtk_builder_new ();
   gtk_builder_add_from_file (builder, "builder.ui.xml", NULL);
@@ -225,12 +185,6 @@ gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_
       g_signal_connect (button, "clicked", G_CALLBACK (reveal), entry);
       gtk_widget_add_css_class(GTK_WIDGET(entry), "noerror");
       datap->data2 = entry;
-      
-      //label
-      label = gtk_builder_get_object (builder, "InsertLabel");
-      gtk_widget_set_visible(GTK_WIDGET(label), FALSE);
-      datap->label = label;
-      g_signal_connect (button, "clicked", G_CALLBACK (hideLabel), label);
       //go button
       GoButton = gtk_builder_get_object (builder, "buttonGoInsert");
       gtk_widget_set_visible(GTK_WIDGET(GoButton), FALSE);
@@ -271,9 +225,7 @@ gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_
 
   //button 5 tri
   button = gtk_builder_get_object (builder, "buttonSort");
-  label = gtk_builder_get_object (builder,"buttonSortState");
-  gtk_widget_set_visible(GTK_WIDGET(label), FALSE);
-  g_signal_connect(button, "clicked", G_CALLBACK(tri), label);
+  g_signal_connect(button, "clicked", G_CALLBACK(tri), NULL);
   g_signal_connect(button, "clicked", G_CALLBACK(button_clicked), drawing_area);
   
 
@@ -283,6 +235,11 @@ gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_
   //gtk_grid_attach(GTK_GRID(grid), GTK_WIDGET(button), 4, 4, 4, 4);
 
 
+
+
+
+
+//gtk_window_fullscreen(GTK_WINDOW(window));
   // affichage de la fenetre
   gtk_widget_set_visible (GTK_WIDGET (window), TRUE);
   // on a plus besoin du builder

@@ -32,9 +32,6 @@ window {
   box-shadow: -2px -2px 2px rgb(121, 187, 204);
   border-radius: 30px;
 }
-.message{          
-  color: rgb(255, 255, 255);            
-}
 
 .error{
   background-color: rgba(129, 26, 26, 0.418);          
@@ -53,3 +50,6 @@ window {
   box-shadow: -2px -2px 2px rgb(121, 187, 204);
   border-radius: 30px;
 }
+/*<style>
+              <class name="Drawing"/>
+            </style>*/
