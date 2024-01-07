@@ -1,0 +1,55 @@
+
+window {
+  background-color: rgb(183, 196, 171);
+
+  font-family: 'Arial Narrow', sans-serif;
+  font-size: 16px;
+  font-weight: 75;
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding: 0;
+}
+.buttonA {
+  color: white;
+  background-image: linear-gradient(to right bottom, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  margin: 5px;
+  background-size: 120% 150%;           
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+.buttonA:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+} 
+
+
+
+.noerror {
+  color: black;
+  margin: 5px;
+  transition: 0.5s;          
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+.message{          
+  color: rgb(255, 0, 0);            
+}
+
+.error{
+  background-color: rgba(129, 26, 26, 0.418);          
+  margin: 5px;
+  transition: 0.5s;
+  color: white;            
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
+
+.found{
+  background-color: rgba(53, 184, 59, 0.418);          
+  margin: 5px;
+  transition: 0.5s;
+  color: white;            
+  box-shadow: -2px -2px 2px rgb(121, 187, 204);
+  border-radius: 30px;
+}
